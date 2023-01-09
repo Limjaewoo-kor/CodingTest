@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
+//8 3
+//7
+
 public class Main {
 
     public int solution(int n,int m) {
