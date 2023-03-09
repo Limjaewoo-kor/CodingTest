@@ -104,4 +104,19 @@ public class Main {
 //        }
 //        return arr;
 //    }
+
+        //반 친구와 자리 변경문제 - Arrays.sort 사용
+//      private static ArrayList<Integer> Soultion(int n, int[] cache) {
+//        //9
+//        //120 125 152 130 135 135 143 127 160
+//        ArrayList<Integer> answer = new ArrayList<>();
+//        int[] arr = cache.clone();
+//        Arrays.sort(arr);
+//        for (int i = 1; i < n; i++) {
+//            if(arr[i] != cache[i]){
+//                answer.add(i+1);
+//            }
+//        }
+//        return answer;
+//    }
 }
