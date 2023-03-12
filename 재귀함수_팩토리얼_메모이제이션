@@ -19,7 +19,7 @@ public class Main {
 
     }
 
-//    피보나치 재귀(메모이제이션)
+//    피보나치 재귀(메모이제이션)  피보나치의 효율을 따지자면, 재귀보다는 for문이 더 좋다.
     private int DFS(int n) {
         if (fibo[n] > 0){
             return fibo[n];
