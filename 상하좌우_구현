@@ -1,0 +1,43 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stk = new StringTokenizer(br.readLine());
+
+        int n = Integer.parseInt(stk.nextToken());
+
+        // N을 입력받기
+        String[] plans = br.readLine().split(" ");
+        int x = 1, y = 1;
+
+        int[] dx = {0,0,-1,1};
+        int[] dy = {-1,1,0,0};
+        char[] move = {'L','R','U','D'};
+
+        for (int i = 0; i < plans.length; i++) {
+            char plan = plans[i].charAt(0);
+            int tmpx = -1;
+            int tmpy = -1;
+            for (int j = 0; j < 4; j++) {
+                if(plan==move[j]){
+                    tmpx = x + dx[j];
+                    tmpy = y + dy[j];
+                }
+            }
+            if (tmpx < 1 || tmpy < 1 || tmpx > n || tmpy > n ){
+                continue;
+            }
+            x = tmpx;
+            y = tmpy;
+        }
+        System.out.println(x+" "+y);
+
+
+    }
+
+
+}
