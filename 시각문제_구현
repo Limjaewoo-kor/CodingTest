@@ -1,0 +1,33 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stk = new StringTokenizer(br.readLine());
+
+        int n = Integer.parseInt(stk.nextToken());
+        int count = 0;
+
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j < 60; j++) {
+                for (int k = 0; k < 60; k++) {
+                    Boolean aBoolean = checkTime(i, j, k);
+                    if(aBoolean) count++;
+                }
+            }
+        }
+        System.out.println(count);
+    }
+
+    private static Boolean checkTime(int h, int m, int s) {
+        if (h%10==3 || m/10==3 || m%10==3 || s/10==3 || s%10==3){
+            return true;
+        }
+        return false;
+    }
+
+
+}
