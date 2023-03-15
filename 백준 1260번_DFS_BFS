@@ -1,0 +1,80 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Main {
+
+    static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+    static int[] ch;
+    static int n,l,startv;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stk = new StringTokenizer(br.readLine());
+
+         n = Integer.parseInt(stk.nextToken());
+         l = Integer.parseInt(stk.nextToken());
+         startv = Integer.parseInt(stk.nextToken());
+
+         ch = new int[n+1];
+
+        for (int i = 0; i <= n; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < l; i++) {
+            stk = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(stk.nextToken());
+            int b = Integer.parseInt(stk.nextToken());
+            graph.get(a).add(b);
+            graph.get(b).add(a);
+        }
+
+        DFS(startv);
+
+        Arrays.fill(ch, 0);
+        System.out.println();
+
+        BFS(startv);
+
+    }
+
+    private static void DFS(int v) {
+        ch[v] =1;
+        System.out.print(v+" ");
+        for (int i = 0; i < graph.get(v).size(); i++) {
+                int y =10000;
+            for (int j = 0; j < graph.get(v).size(); j++) {
+                if ( graph.get(v).get(j) < y && ch[graph.get(v).get(j)]==0){
+                    y = graph.get(v).get(j);
+                }
+            }
+            if (y != 10000 &&ch[y]==0){
+                DFS(y);
+            }
+        }
+    }
+
+
+    private static void BFS(int v) {
+        Queue<Integer> q = new LinkedList();
+        q.offer(v);
+        ch[v] = 1;
+        while (!q.isEmpty()){
+            int nv = q.poll();
+            System.out.print(nv + " ");
+            for (int i = 0; i <graph.get(nv).size(); i++) {
+                int y = 10000;
+                for (int j = 0; j < graph.get(nv).size(); j++) {
+                    if ( graph.get(nv).get(j) < y && ch[graph.get(nv).get(j)]==0){
+                        y = graph.get(nv).get(j);
+                    }
+                }
+                if (y != 10000 &&ch[y]==0){
+                    q.offer(y);
+                    ch[y]=1;
+                }
+            }
+        }
+    }
+}
