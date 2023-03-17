@@ -1,0 +1,92 @@
+BFS와 DFS로 모두 풀어보았다.
+물론 DFS로 푼 경우는 시간초과가 나왔다.
+
+
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Main {
+    static int[] ch;
+    static int n,k;
+//    static int tmp=0;
+//    static int result=10000;
+    static int[] dx = {-1,1,2};
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stk = new StringTokenizer(br.readLine());
+
+         n = Integer.parseInt(stk.nextToken());
+         k = Integer.parseInt(stk.nextToken());
+
+         ch = new int[100001];
+
+//        dfs(n,k);
+//        System.out.println(result);
+//        Arrays.fill(ch,0);
+        if(n >= k) {
+            System.out.println(n - k);
+        } else {
+            System.out.println(bfs(n, k));
+        }
+    }
+
+    private static int bfs(int n, int k) {
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(n);
+        ch[n] = 1;
+        while (!q.isEmpty()) {
+            Integer x = q.poll();
+            for (int i = 0; i < 3; i++) {
+               int nx;
+                if (i==0){
+                    nx = x + dx[i];
+                } else if (i==1) {
+                    nx = x + dx[i];
+                } else {
+                    nx = x * dx[i];
+                }
+
+                if(nx == k) {
+                    return ch[x];
+                }
+
+                if(nx >= 0 && nx <= 100000){
+                    if(ch[nx] == 0) {
+                        ch[nx] = ch[x] + 1;
+                        q.offer(nx);
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+//    private static void dfs(int n, int k) {
+//        // 5 17
+//        if(n>k+1 || n<=0){
+//            return;
+//        }
+//        if(n==k){
+//            for (int i = 0; i < ch.length; i++) {
+//                if (ch[i] == 1){
+//                    tmp+=1;
+//                }
+//            }
+//            if(result > tmp){
+//                result = tmp;
+//            }
+//            tmp=0;
+//        }else {
+//            if (ch[n]==0){
+//                ch[n] = 1;
+//                dfs(n+1,k);
+//                dfs(n-1,k);
+//                dfs(n*2,k);
+//                ch[n] = 0;
+//            }
+//        }
+//    }
+}
