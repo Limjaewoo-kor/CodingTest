@@ -1,0 +1,44 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Main {
+
+    static int n,lt,rt,sum,rlt,rrt;
+    static int[] arr;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stk = new StringTokenizer(br.readLine());
+
+        n = Integer.parseInt(stk.nextToken());
+        arr = new int[n];
+
+        stk = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(stk.nextToken());
+        }
+
+        lt = 0;
+        rt = n - 1;
+        sum = Integer.MAX_VALUE;
+        Arrays.sort(arr);
+
+        while (lt < rt) {
+            if (sum > Math.abs(arr[lt] + arr[rt])) {
+                sum = Math.abs(arr[lt] + arr[rt]);
+                rlt = arr[lt];
+                rrt = arr[rt];
+            }
+
+            if (arr[lt] + arr[rt] > 0) {
+                rt--;
+            } else {
+                lt++;
+            }
+        }
+
+        System.out.print(rlt + " " + rrt);
+    }
+
+}
