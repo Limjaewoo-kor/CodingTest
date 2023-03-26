@@ -1,0 +1,47 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Main {
+
+    public static String binarySearch(int[] arr, int target, int lt, int rt) {
+        String answer = "no";
+        while (lt <= rt) {
+            int mid = (lt+rt)/2;
+            if (target == arr[mid]) {
+                answer = "yes";
+                return answer;
+            }
+            if (target < arr[mid]) {
+                rt = mid-1;
+            }else lt =mid+1;
+        }
+        return answer;
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stk = new StringTokenizer(br.readLine());
+
+        StringBuilder sb = new StringBuilder();
+
+        int n = Integer.parseInt(stk.nextToken());
+        int [] arr = new int[n];
+        stk = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(stk.nextToken());
+        }
+        Arrays.sort(arr);
+        stk = new StringTokenizer(br.readLine());
+        int m = Integer.parseInt(stk.nextToken());
+        int [] arr2 = new int[m];
+        stk = new StringTokenizer(br.readLine());
+        for (int i = 0; i < m; i++) {
+            sb.append(binarySearch(arr, Integer.parseInt(stk.nextToken()),0,n-1)+" ");
+        }
+
+        System.out.print(sb);
+    }
+
+}
