@@ -1,0 +1,30 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    static long[] save= new long[30001];
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stk = new StringTokenizer(br.readLine());
+
+        int n = Integer.parseInt(stk.nextToken());
+
+        for (int i = 2; i <= n; i++) {
+            save[i] = save[i - 1] + 1;
+            if (i % 2 == 0)
+                save[i] = Math.min(save[i], save[i / 2] + 1);
+            if (i % 3 == 0)
+                save[i] = Math.min(save[i], save[i / 3] + 1);
+            if (i % 5 == 0)
+                save[i] = Math.min(save[i], save[i / 5] + 1);
+        }
+
+        System.out.print(save[n]);
+    }
+
+}
