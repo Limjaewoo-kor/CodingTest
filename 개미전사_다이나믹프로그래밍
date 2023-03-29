@@ -1,0 +1,31 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    static int[] dy = new int[101];
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stk = new StringTokenizer(br.readLine());
+
+        int n = Integer.parseInt(stk.nextToken());
+        int[] arr = new int[n];
+        stk = new StringTokenizer(br.readLine());
+
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(stk.nextToken());
+        }
+
+        dy[0]=arr[0];
+        dy[1]=Math.max(arr[1],arr[0]);
+        for (int i = 2; i < n; i++) {
+            dy[i] = Math.max(arr[i-1],arr[i-2]+arr[i]);
+        }
+        System.out.println(dy[n-1]);
+        
+    }
+
+}
