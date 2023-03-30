@@ -1,0 +1,74 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+
+
+class Main {
+
+    public static int[] solution(String[] wallpaper) {
+
+        int rowj=10000;
+        int rowk=10000;
+        int upj=0;
+        int upk=0;
+
+        char[] tmpch = wallpaper[0].toCharArray();
+        real = new int[wallpaper.length][tmpch.length];
+
+        for (int j = 0; j < wallpaper.length; j++) {
+            if(wallpaper[j] != null){
+                char[] ch = wallpaper[j].toCharArray();
+                for (int k = 0; k < ch.length; k++) {
+                    if(ch[k] == '#') {
+                        real[j][k] = 1;
+                    }else {
+                        real[j][k] = 0;
+                    }
+                }
+            }
+        }
+
+        for (int j = 0; j < real.length; j++) {
+            for (int k = 0; k <real[0].length; k++) {
+                if(real[j][k] == 1){
+                    if(j< rowj){
+                        rowj = j;
+                    }
+                    if(k< rowk){
+                        rowk = k;
+                    }
+                    if(j> upj){
+                        upj = j;
+                    }
+                    if(k> upk){
+                        upk = k;
+                    }
+                }
+            }
+        }
+
+        int[] answer = {rowj,rowk,(upj +1),(upk +1)};
+        return answer;
+    }
+
+    static String[] wallpaper = new String[51];
+    static int[][] real;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stk = new StringTokenizer(br.readLine(),",");
+
+        int i=0;
+
+        while (stk.hasMoreTokens()){
+            wallpaper[i] = stk.nextToken().replace("[", "").replace("\"", "").replace("]","").replace(" ","");
+            i++;
+        }
+
+        System.out.println(Arrays.toString(solution(wallpaper)));
+
+    }
+}
