@@ -1,0 +1,23 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
+class Solution {
+    public int solution(int n, int m, int[] section) {
+        int answer = 0;
+            Queue<Integer> q = new LinkedList<>();
+
+            for (int i : section) {
+                q.offer(i);
+            }
+
+            while (!q.isEmpty()) {
+                answer++;
+                Integer poll = q.poll();
+                int a = poll+(m-1);
+                while (!q.isEmpty() && q.peek() <= a) {
+                    q.poll();
+                }
+            }
+        return answer;
+    }
+}
