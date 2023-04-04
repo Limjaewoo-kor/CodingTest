@@ -1,0 +1,43 @@
+성능보단 정확성에 맞추라는 내용이 있었습니다.
+아래와 같이 풀이하였고 점수는 100점이 나왔습니다.
+
+// you can also use imports, for example:
+import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int[] solution(int[] A, int K) {
+        // Implement your solution here
+        Queue q = new LinkedList();
+
+        for (int i = A.length-1; i >= 0; i--) {
+            q.offer(A[i]);
+        }
+
+        for (int i = 0; i < K; i++) {
+            q.offer(q.poll());
+        }
+
+        int[] result = new int[A.length];
+
+        for (int i = A.length-1; i >= 0; i--) {
+            result[i] = (int) q.poll();
+        }
+        return result;
+    }
+}
+
+하지만, 관련하여 다른사람의 풀이를 검색해보니 아래와 같은 훨씬 단순한 풀이를 찾을 수 있었습니다.
+
+
+class Solution {
+    public int[] solution(int[] A, int K) {
+        int[] result = new int[A.length];
+        for(int i = 0; i < A.length; i++) {
+            result[(i + K) % A.length] = A[i];
+        }
+        return result;
+    }
+}
