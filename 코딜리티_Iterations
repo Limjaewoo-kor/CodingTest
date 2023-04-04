@@ -1,0 +1,25 @@
+// you can also use imports, for example:
+// import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int solution(int N) {
+        // Implement your solution here
+        int cnt =0;
+        int tmp = 0;
+        String s = Integer.toBinaryString(N);
+        for (char c : s.toCharArray()) {
+            if(c==48){
+                tmp++;
+            }else if(c==49){
+                if(cnt < tmp) {
+                    cnt = tmp;
+                }
+                tmp = 0;
+            }
+        }
+        return cnt;
+    }
+}
