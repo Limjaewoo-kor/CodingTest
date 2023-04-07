@@ -1,0 +1,35 @@
+// you can also use imports, for example:
+import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        // Implement your solution here
+           int answer = 0;
+            int tmp=1;
+            int N =A.length;
+            if(N != 0) {
+                Arrays.sort(A);
+                if(A[0]!=1){
+                    answer = 0;
+                    return answer;
+                }else {
+                    for (int i = 1; i < A.length; i++) {
+                        if ((A[i - 1] + 1) == A[i]) {
+                            tmp++;
+                        }
+                    }
+                    if(tmp==N){
+                        answer = 1;
+                        return answer;
+                    }
+                }
+            }else {
+                answer = 0;
+            }
+
+            return answer;
+    }
+}
