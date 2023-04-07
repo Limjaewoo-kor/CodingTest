@@ -1,0 +1,90 @@
+
+최초의 코드 - 시간초과로 인해 66점이 나왔다.
+
+// you can also use imports, for example:
+import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int[] solution(int N, int[] A) {
+        // Implement your solution here
+           int[] answer = new int[N];
+
+            for (int i = 0; i < A.length; i++) {
+                if(A[i]==(N+1)){
+                    Arrays.sort(answer);
+                    Arrays.fill(answer,answer[N-1]);
+                }else {
+                    answer[A[i] - 1] = answer[A[i] - 1] + 1;
+                }
+            }
+
+            return answer;
+    }
+}
+
+두번째 코드 - 시간초과로 인해 77점이 나왔다. 
+-Arrays.sort(answer) 를 이용해서 맥스값을 가져오던 부분을 미리 변수에 담아놓도록 변경하였다.
+
+// you can also use imports, for example:
+import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int[] solution(int N, int[] A) {
+        // Implement your solution here
+        int[] answer = new int[N];
+        int tmp = 0;
+
+        for (int i = 0; i < A.length; i++) {
+            if(A[i] == (N+1)){
+                Arrays.fill(answer,tmp);
+            }else {
+                answer[A[i] - 1] = answer[A[i] - 1] + 1;
+                if(answer[A[i] - 1] + 1 > tmp)  tmp = answer[A[i] - 1];
+            }
+        }
+
+        return answer;
+    }
+}
+
+
+세번째 코드 - 100점이 나왔다. 
+-Arrays.fill(answer,tmp); 를 이용해서 N+1이 나올때마다 fill을 돌던 부분을 값을 체크해놓고 마지막에 한번만 돌도록 수정하였다.
+
+// you can also use imports, for example:
+// import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int[] solution(int N, int[] A) {
+        // Implement your solution here
+            int[] answer = new int[N];
+            int tmpMax = 0;
+            int tmp = 0;
+
+            for (int i = 0; i < A.length; i++) {
+                if(A[i] == (N+1)){
+                    tmpMax = tmp;
+                }else {
+                    if(answer[A[i] - 1]  < tmpMax){ answer[A[i] - 1] = tmpMax;}
+                    answer[A[i] - 1] = answer[A[i] - 1] + 1;
+                    tmp = Math.max(answer[A[i] - 1] , tmp);
+                }
+            }
+            if(tmpMax > 0){
+                for (int i = 0; i < answer.length; i++) {
+                    if(answer[i] < tmpMax) answer[i] = tmpMax;
+                }
+            }
+
+            return answer;
+    }
+}
