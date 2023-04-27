@@ -1,0 +1,85 @@
+중복제거에 대하여 당연히 Set을 생각하였는데, 
+다른사람 풀이를보니 stream에 distinct를 사용하는 방법도 있었다. 나의 풀이 아래쪽에 다른 풀이를 참고용으로 넣어놓는다.
+
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+public class Main {
+
+
+// ["muzi", "frodo", "apeach", "neo"]
+// ["muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi"]
+// 2
+// [2,1,1,0]
+
+    public static int[] solution(String[] id_list, String[] report, int k) {
+        int[] answer = new int[id_list.length];
+        Map<String,HashSet<String>> map = new HashMap<>();
+        Map<String,Integer> idNum = new HashMap<>();
+
+        for (int i = 0; i < id_list.length; i++) {
+            map.put(id_list[i], new HashSet<>());
+            idNum.put(id_list[i], i);
+        }
+
+        for (String s : report) {
+            String[] str = s.split(" ");
+            String from = str[0];
+            String to = str[1];
+            map.get(to).add(from);
+        }
+
+
+        for (int i = 0; i < id_list.length; i++) {
+            HashSet<String> send = map.get(id_list[i]);
+            if (send.size() >= k){
+                for (String s : send) {
+                    answer[idNum.get(s)]++;
+                }
+            }
+        }
+
+        return answer;
+    }
+
+    public static void main(String[] args) {
+
+        String[] id_list = {"muzi", "frodo", "apeach", "neo"};
+        String[] report = {"muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi"};
+        int k =2;
+
+        int[] solution = solution(id_list, report, k);
+        for (int i : solution) {
+            System.out.println("i = " + i);
+        }
+    }
+}
+
+
+================================================================================================
+
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
+class Solution {
+    public int[] solution(String[] id_list, String[] report, int k) {
+        List<String> list = Arrays.stream(report).distinct().collect(Collectors.toList());
+        HashMap<String, Integer> count = new HashMap<>();
+        for (String s : list) {
+            String target = s.split(" ")[1];
+            count.put(target, count.getOrDefault(target, 0) + 1);
+        }
+
+        return Arrays.stream(id_list).map(_user -> {
+            final String user = _user;
+            List<String> reportList = list.stream().filter(s -> s.startsWith(user + " ")).collect(Collectors.toList());
+            return reportList.stream().filter(s -> count.getOrDefault(s.split(" ")[1], 0) >= k).count();
+        }).mapToInt(Long::intValue).toArray();
+    }
+}
+
