@@ -1,0 +1,77 @@
+2022 KAKAO TECH INTERNSHIP _ 두 큐 합 같게 만들기
+
+
+
+import java.util.*;
+
+public class Main {
+
+    // 두개의 큐가 주어진다.
+    // q1에서 빼서 q2에 넣는다. -- 합쳐서 1회 수행한것
+    // 합을 구한다. - 홀수면 안된다.
+    // 둘의 값을 같게 한다.
+
+    public static long solution(int[] queue1, int[] queue2) {
+        long answer = 0;
+        long q1Sum = 0;
+        long q2Sum = 0;
+        long total = 0;
+
+        Deque<Long> q1 = new LinkedList<>();
+        Deque<Long> q2 = new LinkedList<>();
+
+        for (Integer integer : queue1) {
+            q1.offer(Long.valueOf(integer));
+            q1Sum += integer;
+        }
+
+        for (Integer integer : queue2) {
+            q2.offer(Long.valueOf(integer));
+            q2Sum += integer;
+        }
+        total = q1Sum + q2Sum;
+
+        if((total %2) != 0) return -1;
+        Long len = Long.valueOf(600000);
+
+        while (q1Sum!=q2Sum && answer < len){
+            answer++;
+            if (total/2 > q1Sum){
+                Long poll = q2.poll();
+                q1.offer(poll);
+                q1Sum += poll;
+                q2Sum -= poll;
+            }else {
+                Long poll = q1.poll();
+                q2.offer(poll);
+                q2Sum += poll;
+                q1Sum -= poll;
+            }
+        }
+
+        if (answer == len) return -1;
+
+        return answer;
+    }
+
+    public static void main(String[] args) {
+
+//        int[] q1 = {3,2,7,2};
+//        int[] q2 = {4,6,5,1};
+
+//        int[] q1 = {1,2,1,2};
+//        int[] q2 = {1,10,1,2};
+
+//        int[] q1 = {1,1};
+//        int[] q2 = {1,5};
+
+        int[] q1 = {1};
+        int[] q2 = {2};
+
+
+        System.out.println(solution(q1,q2));
+
+
+    }
+
+}
