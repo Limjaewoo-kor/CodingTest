@@ -1,0 +1,88 @@
+
+2022 KAKAO TECH INTERNSHIP_ 코딩 테스트 공부
+
+
+import java.util.Arrays;
+
+public class Main {
+
+    public static int solution(int alp, int cop, int[][] problems) {
+
+        int goal_a=0;
+        int goal_c=0;
+        int answer = 0;
+        //목표 알고력과 코딩력을 구하기
+        for(int i=0; i < problems.length; i++){
+            goal_a = Math.max(problems[i][0],goal_a); //20
+            goal_c = Math.max(problems[i][1],goal_c); //20
+        }
+
+
+        // 최초 알고력과 코딩력이 모두 목표치 보다 높으면 종료
+        if(goal_a <= alp && goal_c <= cop){
+            return 0;
+        }
+        //dp를 벗어나지 않도록 조치
+
+        // 최초 알고력이 목표 알고력보다 높으면 알고력을 목표알고력으로 한다
+        if(alp >= goal_a){
+            alp = goal_a;
+        }
+        // 최초 코딩력이 목표 코딩력보다 높으면 코딩력을 목표코딩력으로 한다
+        if(cop >= goal_c){
+            cop = goal_c;
+        }
+
+
+        // dp 선언
+        int[][] dp =new int[goal_a+2][goal_c+2];
+
+        for(int i= alp; i <= goal_a; i++){
+            Arrays.fill(dp[i],Integer.MIN_VALUE);
+            for(int j=cop;j<=goal_c;j++){
+                dp[i][j] = Integer.MAX_VALUE;
+            }
+        }
+
+        dp[alp][cop] = 0;
+
+        for(int i=alp;i<=goal_a;i++){
+            for(int j=cop;j<=goal_c;j++){
+
+                dp[i+1][j]=Math.min(dp[i+1][j],dp[i][j]+1); // 알고력늘리기
+                dp[i][j+1]=Math.min(dp[i][j+1],dp[i][j]+1); // 코딩력늘리기
+
+                for(int[] p :problems){
+                    if(i>=p[0]&&j>=p[1]){
+                        if(i+p[2]>goal_a&&j+p[3]>goal_c){ // 둘다 목표치 도착
+                            dp[goal_a][goal_c]=Math.min(dp[goal_a][goal_c],dp[i][j]+p[4]);
+                        }
+                        else if(i+p[2]>goal_a){     // 알고력만 목표치 도착
+                            dp[goal_a][j+p[3]]=Math.min(dp[goal_a][j+p[3]],dp[i][j]+p[4]);
+                        }
+                        else if(j+p[3]>goal_c){     // 코딩력만 목표치 도착
+                            dp[i+p[2]][goal_c]=Math.min(dp[i+p[2]][goal_c],dp[i][j]+p[4]);
+                        }
+                        else if(i+p[2]<=goal_a&&j+p[3]<=goal_c){    //  둘다 목표치 미도착
+                            dp[i+p[2]][j+p[3]]=Math.min(dp[i+p[2]][j+p[3]],dp[i][j]+p[4]);  //문제 풀기
+                        }
+                    }
+
+                }
+            }
+        }
+        answer = dp[goal_a][goal_c];
+        return answer;
+    }
+
+    public static void main(String[] args) {
+
+        int alp = 10;
+        int cop = 10;
+        int[][] problems = {{10,15,2,1,2},{20,20,3,3,4}};
+
+        System.out.println(solution(alp,cop,problems));
+
+    }
+
+}
