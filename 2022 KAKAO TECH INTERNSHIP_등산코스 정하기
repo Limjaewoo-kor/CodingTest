@@ -1,0 +1,127 @@
+2022 KAKAO TECH INTERNSHIP
+등산코스 정하기
+
+
+
+import java.util.*;
+
+public class Main {
+    public static List<List<Node>> graph;
+
+    public static class Node {
+        int edge, cost;
+
+        Node(int edge, int cost) {
+            this.edge = edge;
+            this.cost = cost;
+        }
+    }
+
+    public static int[] solution(int n, int[][] paths, int[] gates, int[] summits) {
+
+        graph = new ArrayList<>();
+        for (int i = 0; i < n + 1; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        for (int[] path : paths) {
+            int s = path[0];
+            int e = path[1];
+            int w = path[2];
+
+            // 출발지가 입구일 경우 다른 곳으로만 갈 수 있는 단방향
+            // 도착지가 산봉우리일 경우 특정 한 곳에서 산봉우리로 가는 단방향
+            
+            if (isGate(s, gates) || isSummit(e, summits)) {
+                graph.get(s).add(new Node(e, w));
+            } else if (isGate(e, gates) || isSummit(s, summits)) {
+                graph.get(e).add(new Node(s, w));
+            } else {
+                graph.get(s).add(new Node(e, w));
+                graph.get(e).add(new Node(s, w));
+            }
+        }
+
+        return dijkstra(n, gates, summits);
+    }
+
+    public static int[] dijkstra(int n, int[] gates, int[] summits) {
+        int[] answer = {};
+        Queue<Node> q = new LinkedList<>();
+        int[] intensity = new int[n + 1];
+
+        Arrays.fill(intensity, Integer.MAX_VALUE);
+
+        // 입구 전부 큐에 넣음
+        for (int gate : gates) {
+            q.offer(new Node(gate, 0));
+            intensity[gate] = 0; // 시작 지점 초기화
+        }
+
+        while (!q.isEmpty()) {
+            Node startNode = q.poll();
+
+            // 현재 가중치가 저장된 가중치보다 큰 경우
+            if(startNode.cost > intensity[startNode.edge]) continue;
+
+            for (int i = 0; i < graph.get(startNode.edge).size(); i++) {
+                Node nowNode = graph.get(startNode.edge).get(i);
+
+                int dis = Math.max(intensity[startNode.edge], nowNode.cost);
+                if (intensity[nowNode.edge] > dis) {
+                    intensity[nowNode.edge] = dis;
+                    q.offer(new Node(nowNode.edge, dis));
+                }
+            }
+        }
+
+        int mNum = Integer.MAX_VALUE; // 산봉우리 번호
+        int mCost = Integer.MAX_VALUE; // 최솟값
+
+        Arrays.sort(summits);
+
+        for (int summit : summits) {
+            if (intensity[summit] < mCost) {
+                mNum = summit;
+                mCost = intensity[summit];
+            }
+        }
+
+        answer =  new int[]{mNum, mCost};
+        return answer;
+    }
+
+
+    public static boolean isGate(int num, int[] gates) {
+        for (int gate : gates) {
+            if (num == gate) return true;
+        }
+        return false;
+    }
+
+    public static boolean isSummit(int num, int[] submits) {
+        for (int submit : submits) {
+            if (num == submit) return true;
+        }
+        return false;
+    }
+
+
+    public static void main(String[] args) {
+
+//        int n = 6;
+//        int[][] paths = {{1,2,3},{2,3,5},{2,4,2},{2,5,4},{3,4,4},{4,5,3},{4,6,1},{5,6,1}};
+//        int[] gates = {1,3};
+//        int[] summits = {5};
+//5,3
+
+        int n = 7;
+        int[][] paths = {{1, 2, 5}, {1, 4, 1}, {2, 3, 1}, {2, 6, 7}, {4, 5, 1}, {5, 6, 1}, {6, 7, 1}};
+        int[] gates = {3,7};
+        int[] summits = {1,5};
+        //5 ,1
+
+        System.out.println(Arrays.toString(solution(n, paths, gates, summits)));
+
+    }
+}
