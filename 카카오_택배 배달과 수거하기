@@ -1,0 +1,46 @@
+해당 문제는 시간초과 극복이 불가하였고, 관련하여 다른사람의 풀이를 찾아보니 아래와 같은 풀이를 찾을 수 있었다.
+하지만, 내 생각에서는 전혀 나올 수 없는 신박한 알고리즘이었기에, 깊은 분석을 해봐야할 것 같다.
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        int n = 5;
+        int cap = 4;
+        int[] deliveries = {1,0,3,1,2};
+        int[] pickups = {0,3,0,4,0};
+        //16
+
+//        int n = 5;
+//        int cap = 2;
+//        int[] deliveries = {1,0,2,0,1,0,2};
+//        int[] pickups = {0,2,0,1,0,2,0};
+        // 30
+
+        System.out.println(solution(n,cap,deliveries,pickups));
+    }
+
+    public static int solution(int n, int cap, int[] deliveries, int[] pickups) {
+
+        int answer = 0;
+        int deliver = 0;
+        int pickup = 0;
+
+        for (int i = n-1; i >= 0; i--) {
+            if (deliveries[i] != 0 || pickups[i] != 0) {
+                int cnt = 0;
+                while (deliver < deliveries[i] || pickup < pickups[i]) {
+                    cnt++;
+                    deliver += cap;
+                    pickup += cap;
+                }
+                deliver -= deliveries[i];
+                pickup -= pickups[i];
+                answer += (i+1) * cnt * 2;
+            }
+        }
+        return answer;
+    }
+}
