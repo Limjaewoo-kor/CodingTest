@@ -56,6 +56,34 @@ K번째큰수 - 중복제거가 필요할땐 HashMap이 아닌 TreeSet을 사용
               2. 큐에서 노드를 꺼낸뒤 해당 노드의 인접노드중에서 방문하지 않은 노드를 모두 큐에 넣고 방문처리한다.
               3. 더이상 수행할 수 없을때까지 반복한다.
 
+정렬 - 
+1. 선택정렬 - 전체 데이터중 제일 작은 데이터를 맨앞의 데이터와 바꾸어 정렬해준다.
+	  - 정렬되지않은 남은 데이터중 제일 작은 데이터를 두번째 데이터와 바꾸어준다.
+	  - 해당 과정을 반복한다.
+//  선택정렬
+    public static void main(String[] args) {
+
+
+        int n = 10;
+        int[] arr = {7, 5, 9, 0, 3, 1, 6, 2, 4, 8};
+
+        for (int i = 0; i < n; i++) {
+            int idx = i;
+            for (int j = i + 1; j < n; j++) {
+                if (arr[idx] > arr[j]) {
+                    idx = j;
+                }
+            }
+            int tmp = arr[i];
+            arr[i] = arr[idx];
+            arr[idx] = tmp;
+        }
+        for (int i = 0; i < n; i++) {
+            System.out.println(arr[i] + " ");
+        }
+    }
+
+
 다이나믹프로그래밍[DP]
 
 완전탐색[브루트포스] - 
