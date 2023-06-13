@@ -1,0 +1,39 @@
+public class Main {
+    public static void main(String[] args) {
+
+        int[] sequence = {2,2,2,2,2};
+        int k =6;
+
+        int[] solution = solution(sequence, k);
+
+    }
+
+    public static int[] solution(int[] sequence, int k) {
+
+        int N = sequence.length;
+        int left = 0 ,sum = 0, right = N;
+
+        for(int L = 0, R = 0; L < N; L++) {
+
+            while(R < N && sum < k) {
+                sum += sequence[R++];
+            }
+
+            if(sum == k) {
+                int range = R - L - 1;
+                //기존 길이와 이번 길이의 크기 비교
+                if((right - left) > range) {
+                    left = L;
+                    right = R - 1;
+                }
+            }
+            sum -= sequence[L];
+        }
+
+        int[] answer = {left, right};
+
+        return answer;
+    }
+
+
+}
