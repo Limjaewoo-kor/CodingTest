@@ -1,0 +1,66 @@
+public class Main {
+    public static void main(String[] args) {
+
+        String[] park = {"SOO","OOO","OOO"};
+        String[] routes = {"E 2","S 2","W 1"};
+
+
+        int[] res = solution(park,routes);
+
+        for (int re : res) {
+            System.out.print(re + " ");
+        }
+
+    }
+        public static int[] solution(String[] park, String[] routes) {
+            int sx = 0;
+            int sy = 0;
+
+            char[][] map = new char[park.length][park[0].length()];
+
+            for(int i = 0; i < park.length; i++){
+                map[i] = park[i].toCharArray();
+
+                if(park[i].contains("S")){
+                    sy = i;
+                    sx = park[i].indexOf("S");
+                }
+            }
+
+            for(String tmp : routes){
+                String dir = tmp.split(" ")[0];
+                int len = Integer.parseInt(tmp.split(" ")[1]);
+
+                int nx = sx;
+                int ny = sy;
+
+                for(int i = 0; i < len; i++){
+                    if(dir.equals("E")){
+                        nx++;
+                    }
+                    if(dir.equals("W")){
+                        nx--;
+                    }
+                    if(dir.equals("S")){
+                        ny++;
+                    }
+                    if(dir.equals("N")){
+                        ny--;
+                    }
+                    if(nx >=0 && ny >=0 && ny < map.length && nx < map[0].length){
+                        if(map[ny][nx] == 'X'){
+                            break;
+                        }
+                        if(i == len-1){
+                            sx = nx;
+                            sy = ny;
+                        }
+                    }
+                }
+            }
+            int[] answer = {sy, sx};
+
+            return answer;
+        }
+        
+}
