@@ -1,0 +1,39 @@
+문자열배열과 관련된 문제였으며, 문제 그대로 구현하면 되는 문제였다.
+
+
+public class Main {
+    public static void main(String[] args) {
+
+        String[] cards1 = {"i", "drink", "water"};
+        String[] cards2 = {"want", "to"};
+        String[] goal = {"i", "want", "to", "drink", "water"};
+
+
+        String res = solution(cards1, cards2, goal);
+
+        System.out.println(res);
+
+    }
+    public static String solution(String[] cards1, String[] cards2, String[] goal) {
+        String answer = "Yes";
+
+        int one = 0;
+        int two = 0;
+
+        int i=0;
+        while ( i < goal.length){
+            if (one < cards1.length && goal[i].equals(cards1[one])){
+                one ++;
+            } else if (two < cards2.length && goal[i].equals(cards2[two])) {
+                two++;
+            }else {
+                answer = "No";
+                break;
+            }
+            i++;
+        }
+
+        return answer;
+    }
+
+}
