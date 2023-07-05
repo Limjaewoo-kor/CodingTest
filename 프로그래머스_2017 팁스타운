@@ -1,0 +1,33 @@
+내 풀이 _ +1한후에 2로 나누면 그룹화가 가능하니 아래와 같이 풀었다. 
+
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        int n = 8;
+        int a = 4;
+        int b = 7;
+
+        int res = solution(n,a,b);
+
+        System.out.println(res);
+    }
+    public static int solution(int n, int a, int b){
+
+            int answer = 0;
+            while(a != b){
+                answer ++;
+                a = (a+1)/2;
+                b = (b+1)/2;
+            }
+            return answer;
+    }
+}
+
+제일 추천수가 높은 풀이는 아래와 같았다,
+
+  public int solution(int n, int a, int b)
+    {
+        return Integer.toBinaryString((a-1)^(b-1)).length();
+    }
