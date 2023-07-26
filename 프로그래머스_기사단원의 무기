@@ -1,0 +1,20 @@
+효율적인 약수를 구하는 방법을 알아야하는 문제였다.
+약수는 해당 수의 제곱근에 해당하는 수만큼까지만 구하면 된다.
+
+
+public static int solution(int number, int limit, int power) {
+        int answer = 0;
+
+        for (int i = 1; i <= number ; i++) {
+            int cnt = 0;
+            for (int j = 1; j*j <= i; j++) {
+                if(j*j == i) cnt++;
+                else if (i % j == 0) cnt += 2;
+            }
+
+            if (cnt > limit) answer += power;
+            else answer += cnt;
+        }
+        return answer;
+    }
+}
