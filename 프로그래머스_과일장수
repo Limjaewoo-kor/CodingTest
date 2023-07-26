@@ -1,0 +1,36 @@
+아래와 같이 풀이 하였으나, 
+
+public static int solution(int k, int m, int[] score) {
+        int answer = 0;
+        int j = 0;
+
+        Arrays.sort(score);
+
+        for (int i = score.length; i >= 0; i--) {
+
+            if(j!=0 && j%m==0){
+                answer += score[i]*m;
+            }
+            j++;
+        }
+
+        return answer;
+    }
+
+
+반복문 조건을 아래와 같이 하면 더욱 가시적인 코드가 될 수 있다.
+
+
+class Solution {
+    public int solution(int k, int m, int[] score) {
+        int answer = 0;
+
+        Arrays.sort(score);
+
+        for(int i = score.length; i >= m; i -= m){
+            answer += score[i - m] * m;
+        }
+
+        return answer;
+    }
+}
