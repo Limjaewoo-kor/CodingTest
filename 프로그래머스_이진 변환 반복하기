@@ -1,0 +1,22 @@
+단순한 문제 였으며, toBinaryString정도만 알고 있으면 풀 수 있는 문제였다.
+
+
+public static int[] solution(String s) {
+        int[] answer = new int[2];
+
+        while (s.length() > 1){
+            int lengthCount = 0;
+            for (int i = 0; i < s.length(); i++) {
+                if(s.charAt(i) == '0'){
+                    answer[1]++;
+                }else {
+                    lengthCount++;
+                }
+            }
+
+            s = Integer.toBinaryString(lengthCount);
+            answer[0]++;
+        }
+
+        return answer;
+    }
