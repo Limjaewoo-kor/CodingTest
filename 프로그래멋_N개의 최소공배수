@@ -1,0 +1,26 @@
+이 문제는 유클리드 호제법을 이용하면 간단히 풀 수 있는 문제였다.
+
+  public static int solution(int[] arr) {
+        int tmpu = arr[0];
+
+        for (int i = 1; i < arr.length; i++) {
+            int tmpc = uc(tmpu,arr[i]); // 최대공약수 2
+            tmpu = (tmpu*arr[i]) / tmpc;
+        }
+        return tmpu;
+    }
+
+
+    private static int uc(int tmp, int i) {
+        int max = Math.max(tmp,i); // 8
+        int min = Math.min(tmp,i); // 6
+
+        while (min != 0){
+            int r=max%min;
+            max=min;
+            min=r;
+
+        }
+        return max;
+
+    }
