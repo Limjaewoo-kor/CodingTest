@@ -1,0 +1,30 @@
+   public static int solution(int k, int[] tangerine) {
+        int answer = 0;
+        Map<Integer,Integer> map = new HashMap<>();
+
+        for (int i = 0; i < tangerine.length; i++) {
+            map.put(tangerine[i],map.getOrDefault(tangerine[i],0)+1);
+        }
+
+        //방법 1 key를 이용한 방법
+        List<Integer> mapKey = new ArrayList<>(map.keySet());
+        mapKey.sort((o1, o2) -> map.get(o2).compareTo(map.get(o1)));
+
+        for(int i : mapKey) {
+            k -= map.get(i);
+            answer++;
+            if(k <= 0) return answer;
+        }
+
+        //방법 2 value를 이용한 방법
+//        List<Integer> valueList = new ArrayList(map.values());
+//        Collections.sort(valueList,Collections.reverseOrder());
+//        
+//        for(int i : valueList) {
+//            k -= map.get(i);
+//            answer++;
+//            if(k <= 0) return answer;
+//        }
+        
+        return answer;
+    }
