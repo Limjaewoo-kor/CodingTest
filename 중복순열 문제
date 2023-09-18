@@ -1,0 +1,41 @@
+중복순열이란?
+원소를 중복으로 선택 할 수 있는 순열을 뜻한다. 
+
+
+public class Main {
+
+    public static void main(String[] args) {
+
+       int n = 3;
+       int m = 2;
+       int[] pm = new int[m];
+
+        solution(n,m,pm);
+
+    }
+
+    private static void solution(int n, int m,int[] pm) {
+
+        DFS(0,n,m,pm);
+
+    }
+
+    private static void DFS(int level, int n,int m, int[] pm) {
+
+      if(level == m ){
+          for (int x : pm ) {
+              System.out.print(x+" ");
+          }
+          System.out.println();
+      }else {
+          for (int i = 1; i <= n; i++) {
+              pm[level] = i;
+              DFS(level+1,n,m,pm);
+          }
+
+      }
+
+    }
+
+
+}
