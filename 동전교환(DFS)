@@ -1,0 +1,35 @@
+public class Main {
+    
+    static int count = Integer.MAX_VALUE;
+    public static void main(String[] args) {
+
+       int n = 3;
+       int m = 15;
+       int[] arr = {1,2,5};
+
+        solution(n,m,arr);
+
+        System.out.println(count);
+    }
+
+    private static void solution(int n, int m,int[] arr) {
+
+        DFS(0,0,n,m,arr);
+
+    }
+
+    private static void DFS(int level,int sum, int n,int m, int[] arr) {
+        if(sum > m) return;
+        if(sum == m){
+            count = Math.min(level,count);
+        } else {
+            for (int i = 0; i < n; i++) {
+                DFS(level+1,sum+arr[i],n,m,arr);
+            }
+        }
+
+
+    }
+
+
+}
