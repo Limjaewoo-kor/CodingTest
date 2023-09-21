@@ -1,0 +1,42 @@
+public class Main {
+
+    static int[] dx = {-1,0,1,0};
+    static int[] dy = {0,1,0,-1};
+
+    static int answer = 0;
+
+    public static void main(String[] args) {
+
+        int[][] board = {
+                {0,0,0,0,0,0,0},{0,1,1,1,1,1,0},
+                {0,0,0,1,0,0,0},{1,1,0,1,0,1,1},
+                {1,1,0,0,0,0,1},{1,1,0,1,1,0,0},
+                {1,0,0,0,0,0,0}
+        };
+
+        board[0][0] =1;
+        DFS(0,0,board);
+        System.out.println(answer);
+    }
+
+    private static void DFS(int x,int y ,int[][] board) {
+
+        if(x==6 && y==6) {
+            answer++;
+        }else {
+            for (int i = 0; i < 4; i++) {
+                if(x+dx[i] == -1 || y+dy[i] == -1 || x+dx[i] == 7 || y+dy[i] == 7) {
+                    
+                }else if(board[x+dx[i]][y+dy[i]]==0){
+                    board[x+dx[i]][y+dy[i]] = 1;
+                    x=x+dx[i];
+                    y=y+dy[i];
+                    DFS(x,y,board);
+                    board[x][y] = 0;
+                }
+            }
+        }
+    }
+
+
+}
