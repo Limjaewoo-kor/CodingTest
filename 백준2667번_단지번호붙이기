@@ -1,0 +1,66 @@
+import java.util.*;
+
+//7
+//0110100
+//0110101
+//1110101
+//0000111
+//0100000
+//0111110
+//0111000
+class Main {
+    static int n,count;
+    static int result =0;
+    static List<Integer> answer = new ArrayList<>();
+    static boolean[][] chx;
+    static int[][] arr;
+    static int[] dx ={0,1,0,-1};
+    static int[] dy ={1,0,-1,0};
+    public int solution(int[][] arr) {
+
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                count=0;
+                if(arr[i][j] == 1 && !chx[i][j]){
+                    DFS(i,j);
+                    answer.add(count);
+                    result++;
+                }
+            }
+        }
+        return 0;
+    }
+
+    private void DFS(int x, int y) {
+        chx[x][y] = true;
+        count++;
+
+        for (int i = 0; i < 4; i++) {
+           int nx = x+dx[i];
+           int ny = y+dy[i];
+           if(nx>=0 && nx < n && ny <n && ny >= 0&& arr[nx][ny] == 1 && !chx[nx][ny]){
+               DFS(nx,ny);
+           }
+        }
+    }
+
+    public static void main(String[] args) {
+        Main T = new Main();
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
+        arr = new int[n][n];
+        chx = new boolean[n][n];
+        for (int i = 0; i < n; i++) {
+            String input = sc.next();
+            for (int j = 0; j < n; j++) {
+                arr[i][j] = input.charAt(j)-'0';
+            }
+        }
+        T.solution(arr);
+
+        System.out.println(result);
+        for(int a : answer){
+            System.out.println(a);
+        }
+    }
+}
