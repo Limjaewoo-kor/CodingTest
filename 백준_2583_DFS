@@ -1,0 +1,75 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+
+public class Main {
+
+    static int M, N, K;
+    static int[][] map;
+    static int[] dx = {0,0,-1,1};
+    static int[] dy = {-1,1,0,0};
+    static int size;
+    static ArrayList<Integer> result;
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        StringBuilder sb = new StringBuilder();
+
+        M = Integer.parseInt(st.nextToken()); //y
+        N = Integer.parseInt(st.nextToken()); //x
+        K = Integer.parseInt(st.nextToken());
+
+        map = new int[M][N];
+        result = new ArrayList<>();
+
+        for(int i=0;i<K;i++) {
+            st = new StringTokenizer(br.readLine());
+            int x1 = Integer.parseInt(st.nextToken()); //0  1   4
+            int y1 = Integer.parseInt(st.nextToken()); //2  1   0
+            int x2 = Integer.parseInt(st.nextToken()); //4  2   6
+            int y2 = Integer.parseInt(st.nextToken()); //4  5   2
+
+            for(int y=y1;y<y2;y++) {  // 2 < 4  - 23    / 1 < 5 1234    /  0< 2  01
+                for(int x=x1;x<x2;x++) { // 0 < 4  - 0123   / 1 < 2 12  / 4 < 6  45
+                    map[y][x] = 1;
+                }
+            }
+        }
+
+        for(int i=0;i<M;i++) {
+            for(int j=0;j<N;j++) {
+                if(map[i][j] == 0) {
+                    size=1;
+                    dfs(i, j);
+                    result.add(size);
+                }
+            }
+        }
+
+        Collections.sort(result);
+
+        sb.append(result.size()+"\n");
+        for(int r : result) {
+            sb.append(r+" ");
+        }
+
+        System.out.println(sb+"");
+    }
+
+    public static void dfs(int y, int x) {
+        map[y][x] = 1;
+
+        for(int i=0;i<4;i++) {
+            int nx = dx[i]+x;
+            int ny = dy[i]+y;
+
+            if(nx>=0 && ny >=0 && nx<N && ny<M && map[ny][nx]==0) {
+                size++;
+                dfs(ny,nx);
+            }
+        }
+    }
+}
