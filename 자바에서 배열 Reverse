@@ -1,39 +1,57 @@
 자바에서 배열 Reverse 하는 2가지 방법
 
 
-1.
- public static void main(String[] args) throws IOException {
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Main {
+
+//    9
+//    0 9
+    public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
+//        int n = 9;
         int[] result = new int[n+1];
 
         for (int i = 1; i < n + 1; i++) {
             result[i] = i;
         }
 
-        for (int i = 0; i < m; i++) {
-            st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
+        st = new StringTokenizer(br.readLine());
+        int a = Integer.parseInt(st.nextToken());
+//            int a = 0;
+        int b = Integer.parseInt(st.nextToken());
+//            int b = 9;
 
-            while(a < b){
-                int tmp = result[a];
-                result[a++] = result[b];
-                result[b--] = tmp;
-            }
+//첫번째 방법
 
+        while(a < b){
+            int tmp = result[a];
+            result[a++] = result[b];
+            result[b--] = tmp;
         }
-        for (int i = 1; i < result.length; i++) {
+        System.out.println("result - ");
+        for (int i = 0; i < result.length; i++) {
             System.out.print(result[i]+" ");
         }
+
+        System.out.println();
+
+//두번째 방법
+
+        //int 배열을 Integer 배열로 변환
+        Integer[] result2 = Arrays.stream(result).boxed().toArray(Integer[]::new);
+
+        Arrays.sort(result2 , Collections.reverseOrder());
+        System.out.println("result2 - ");
+        for (int i = 0; i < result2.length; i++) {
+            System.out.print(result2[i]+" ");
+        }
     }
-    
-    
-    2. 
-     int[] result = new int[n+1];
-     Collections.reverse(Arrays.asList(result));
-    
+}
