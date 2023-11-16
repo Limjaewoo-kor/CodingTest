@@ -1,0 +1,39 @@
+백준_1158_요세푸스 문제_자바
+
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
+
+        Queue<Integer> q = new LinkedList<>();
+
+        for (int i = 0; i < n; i++) {
+           q.offer(i+1);
+        }
+
+        int a=0;
+        System.out.print("<");
+       while (q.size() != 1){
+           if(a!=k-1) {
+               q.offer(q.poll());
+               a++;
+           }else if(a==k-1) {
+               System.out.print(q.poll()+ ", ");
+               a=0;
+           }
+       }
+        System.out.print(q.poll());
+        System.out.print(">");
+
+    }
+}
