@@ -1,0 +1,90 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+
+//6 5
+//1 1 0 1 1
+//0 1 1 0 0
+//0 0 0 0 0
+//1 0 1 1 1
+//0 0 1 1 1
+//0 0 1 1 1
+
+public class Main {
+    static int n, m;
+    static int[][] graph;
+    static boolean[][] chx;
+    static int cnt = 0;
+    static int[][] pos = {{0, -1}, {0, 1}, {1, 0}, {-1, 0}};
+
+
+    static void bfs(int x, int y) {
+        chx[x][y] = true;
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{x, y});
+
+        while (!queue.isEmpty()) {
+            int[] arr = queue.poll();
+            int nowX = arr[0];
+            int nowY = arr[1];
+
+            for (int i = 0; i < pos.length; i++) {
+                int nx = nowX + pos[i][0];
+                int ny = nowY + pos[i][1];
+
+                if (nx >= 0 && nx < n && ny >= 0 && ny < m && graph[nx][ny] == 1 && !chx[nx][ny]) {
+                    cnt++;
+                    chx[nx][ny] = true;
+                    queue.add(new int[]{nx, ny});
+                }
+            }
+        }
+
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        boolean zeroChx = true;
+        List<Integer> answer = new ArrayList<>();
+
+        graph = new int[n][m];
+        chx = new boolean[n][m];
+
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < m; j++) {
+                graph[i][j] = Integer.parseInt(st.nextToken());
+                if (graph[i][j] == 1) {
+                    zeroChx = false;
+                }
+            }
+        }
+
+        if (zeroChx == true) {
+            System.out.println("0");
+            System.out.println("0");
+            return;
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                cnt = 0;
+                if (graph[i][j] == 1 && !chx[i][j]) {
+                    cnt++;
+                    bfs(i, j);
+                    answer.add(cnt);
+                }
+            }
+        }
+        Collections.sort(answer);
+        System.out.println(answer.size());
+        System.out.println(answer.get(answer.size() - 1));
+    }
+}
