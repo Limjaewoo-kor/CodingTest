@@ -1,0 +1,62 @@
+백준_10451번_순열 사이클
+
+https://www.acmicpc.net/problem/10451
+
+
+해당 문제의 경우 DFS문제이지만, 구현문제에 더 가깝다는 느낌을 받으며 풀었다.
+
+처음에 문제 이해에 시간이 조금 걸린 부분이 있었으며, 해당 문제에서 말하는 순열 사이클은 배열의 인덱스와 해당 위치에 값을 가지고 핑퐁하며 반복되는 점이 몇개 인가 찾는 문제이다. 
+
+ 
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+
+public class Main {
+    static int count;
+    static int n;
+    static int[] arr;
+    static boolean[] chk;
+    static int result;
+
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        count = Integer.parseInt(st.nextToken());
+
+        for (int i = 0; i < count; i++) {
+            st = new StringTokenizer(br.readLine());
+            n = Integer.parseInt(st.nextToken());
+            arr = new int[n+1];
+            chk = new boolean[n+1];
+            st = new StringTokenizer(br.readLine());
+            for (int j = 1; j < n+1; j++) {
+                arr[j]= Integer.parseInt(st.nextToken());
+            }
+            result = 0;
+            for (int j = 1; j < arr.length; j++) {
+                if(!chk[j]){
+                    chk[j]=true;
+                    int go = arr[j];
+                    while (true){
+                        if(chk[go]){
+                            result++;
+                            break;
+                        }
+                        chk[go]= true;
+                        go = arr[go];
+
+                    }
+                }
+            }
+            System.out.println(result);
+        }
+    }
+
+}
