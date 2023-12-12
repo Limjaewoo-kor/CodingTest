@@ -1,0 +1,91 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Main {
+
+    static int n;
+    static int[][] map;
+    static boolean[][] chk;
+    static int[] dx ={1,-1,0,0};
+    static int[] dy ={0,0,1,-1};
+    static int result;
+    static int tmp;
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        n = Integer.parseInt(st.nextToken());
+        map = new int[n][n];
+        chk = new boolean[n][n];
+
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < n; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+
+        result=0;
+
+        for (int h = 0; h < 101; h++) {
+            chk = new boolean[n][n];
+            tmp=0;
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if(map[i][j] > h && !chk[i][j]){
+                        dfs(i,j,h);
+//                        bfs(i,j,h);
+                        tmp++;
+                    }
+                }
+            }
+            result = Math.max(result,tmp);
+        }
+
+        System.out.println(result);
+    }
+
+    private static void dfs(int x, int y, int h) {
+
+        chk[x][y]=true;
+
+        for (int i = 0; i < 4; i++) {
+            int nextX = x+dx[i];
+            int nextY = y+dy[i];
+
+            if(nextX < 0 || nextY < 0 || nextX >= n || nextY >= n || chk[nextX][nextY]) continue;
+
+            if(map[nextX][nextY] > h){
+                dfs(nextX,nextY,h);
+            }
+        }
+    }
+
+    private static void bfs(int x, int y, int h) {
+        chk[x][y]=true;
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[] {x,y});
+
+        while (!q.isEmpty()){
+            int[] now = q.poll();
+            int nowX = now[0];
+            int nowY = now[1];
+
+            for (int i = 0; i < 4; i++) {
+                int nextX = nowX+dx[i];
+                int nextY = nowY+dy[i];
+
+                if(nextX <0 || nextY<0||nextX>=n||nextY>=n||chk[nextX][nextY]) continue;
+
+                if(map[nextX][nextY] > h){
+                    q.add(new int[] {nextX,nextY});
+                    chk[nextX][nextY]=true;
+                }
+            }
+        }
+    }
+}
