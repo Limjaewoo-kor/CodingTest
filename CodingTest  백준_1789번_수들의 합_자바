@@ -1,0 +1,57 @@
+이번 문제의 로직은 단순한 그리디 알고리즘 문제이나, 함정이 조금 있습니다.
+
+https://www.acmicpc.net/problem/1789
+
+문제 해석 -
+"서로 다른 N개의 자연수의 합이 S일 때, 자연수 N의 최댓값은 얼마인가?" 이다.
+
+ 
+
+최댓값을 구해야하기에 입력받은 숫자보다 큰 숫자가 될때까지 제일 낮은 수인 1부터 계속 더한후,
+
+더 큰 숫자가 되었을때 초과한 만큼의 숫자만 빼주면된다.
+
+ 
+
+예를들어 7을 입력하였을 경우
+
+7 은 1+2+3+4 가 될때 7을 초과하게된다.
+
+그때 총합인 숫자 10에서  -3만 해주면 7이 되므로, 총 숫자의 개수는 3개가 된다.
+
+ 
+
+- 주의사항
+1. 문제를 잘 읽어야한다, 더한 자연수들의 최대값이 아니라 더한 자연수의 최대 개수이다.2. 입력 받는 수의 범위 때문에 long타입을 써야한다.3. sum과 자연수의 합이 같은 경우도 생각해야한다. [ 범위 ]
+
+ 
+
+ 
+
+- 로직
+ 
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+
+    public static void main(String[] args) throws IOException{
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        long n = Long.parseLong(st.nextToken());
+        long sum = 0L;
+        int rt = 1;
+
+        while (sum <= n){
+            sum = sum + rt++;
+        }
+
+        System.out.println(rt-2);
+
+    }
+    
+}
