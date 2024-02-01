@@ -1,0 +1,62 @@
+
+15649번: N과 M (1)
+
+https://www.acmicpc.net/problem/15649
+
+
+
+이번 문제는 백트래킹 문제입니다.
+
+이번 백트래킹 문제는 백트래킹이 무엇인지 알고 있다면 특별한 주의사항은 없습니다.
+
+전체 순환을 하며, 문제의 조건에 맞게 수가 중복되지 않도록 체크용 배열을 만들어서 풀면 되겠습니다.
+
+
+
+- 로직
+
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+    static int n;
+    static int m;
+    static boolean[] chx;
+    static List list = new ArrayList();
+
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        chx = new boolean[n+1];
+
+        dfs(0,"");
+
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
+
+    }
+
+    private static void dfs(int level, String a) {
+        if(level==m){
+            list.add(a.substring(0,a.length()-1));
+            return;
+        }
+        for (int i = 1; i <= n; i++) {
+            if(chx[i]==false){
+                chx[i]=true;
+                dfs(level+1,a+i+" ");
+                chx[i]=false;
+            }
+
+        }
+
+    }
+
+}
