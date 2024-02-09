@@ -1,0 +1,53 @@
+
+https://www.acmicpc.net/problem/1436
+ 
+해당 문제는 단순하게 브루트포스로 풀이할 수 있습니다.
+ 
+
+ 주의사항 - 
+
+666 - 1666 - 2666 - 3666 - 4666 - 5666 다음 숫자는 6666이 아니라 6660이라는것을 주의하여 문제를 풀이해주세요.
+
+ 
+
+666이 포함된 다음 큰 수를 뽑는 것이기 때문에 아래와 같이 진행됩니다.
+
+666 - 1666 - 2666 - 3666 - 4666 - 5666 - 6660 - 6661 - 6662... 이렇게 진행됩니다.
+
+ 
+
+로직 - 
+
+ 
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int n = Integer.parseInt(st.nextToken());
+        int nowN = 0;
+        int cnt = 0;
+
+        while ( cnt!= n){
+
+            nowN++;
+
+            if( String.valueOf(nowN).indexOf("666")>-1) {
+                cnt++;
+            }
+
+        }
+
+        System.out.println(nowN);
+    }
+}
+
+ 
+
+ 
