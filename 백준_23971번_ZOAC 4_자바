@@ -1,0 +1,73 @@
+https://www.acmicpc.net/problem/23971
+
+
+이번 문제는 23971번_ZOAC 4 문제로 DP를 이용하여 풀이가 가능합니다.
+
+* 물론 완전탐색을 이용한 dfs등으로도 풀이는 가능하지만, 메모리나 시간 초과가 발생합니다.
+
+ 
+
+ 
+
+입력 사항 -  
+
+한줄에 테이블의 행,렬,행간격,열간격이 H,W,N,M형태로  공백으로 구분되어 주어진다. (0 < H,W,N,M  ≤ 50,000)
+
+ 
+
+출력 사항 -  
+
+강의실이 수용할 수 있는 최대 인원 수를 출력한다.
+
+ 
+
+주의 사항  - 
+
+다이나믹프로그래밍 방식으로 풀이 할 것이기에 코드를 먼저 짜기보다는 점화식을 먼저 구해야합니다.
+
+ 
+
+풀이 방식 -
+
+행 간격에 앉을 수 있는 인원은 행 간격보다 커야 된다고 하였으니 행간격 초과로 계산하여 
+
+행의길의 / 행간격+1 이 되며 열간격도 마찬가지로 계산하여 열의길의 / 열간격+1이 됩니다.
+
+행에 앉을 수 있는 인원 = 행의길의 / 행간격+1
+
+열에 앉을 수 있는 인원 = 열의길의 / 열간격+1
+
+위와 같이 구할 수 있으며, 나누었을때 소수점 자리는 올림하면 되기에 아래와 같은 로직으로 풀이 됩니다.
+
+ 
+
+ 
+
+로직 - 
+
+ 
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        double h = Double.parseDouble(st.nextToken());
+        double w = Double.parseDouble(st.nextToken());
+        double n = Double.parseDouble(st.nextToken());
+        double m = Double.parseDouble(st.nextToken());
+
+        int x = (int) Math.ceil(h/(n+1));
+        int y = (int) Math.ceil(w/(m+1));
+
+        System.out.println(x*y);
+
+    }
+
+}
