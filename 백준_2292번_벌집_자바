@@ -1,0 +1,76 @@
+https://www.acmicpc.net/problem/2292
+
+이번 문제는 2292번 벌집 문제로 간단한 계산식이 필요합니다.
+
+입력 사항 -  
+
+첫째 줄에 N(1 ≤ N ≤ 1,000,000,000)이 주어진다.
+
+ 
+
+출력 사항 -  
+
+입력으로 주어진 방까지 최소 개수의 방을 지나서 갈 때 몇 개의 방을 지나는지 출력한다. 
+
+ 
+
+주의 사항  - 
+
+입력 값이 1인 경우도 체크해야한다.
+
+ 
+
+풀이 방식 -
+
+문제에서 설명하는 방에 따른 숫자 증가량을 보면 아래와 같다.
+
+1
+7           +6
+19        +12
+37        +18
+61        +24 ...
+
+ 
+
+6의 다음 배수만큼 더하며 방의 수가 증가하기에
+
+1 + (6*1) + (6*2) + (6*3) + (6*4)... 이러한 형태를 이룬다.
+
+따라서 입력값이 1일땐 1을 출력하며, 그외에 경우엔 방을 하나 넘어갔을때의 최소값인 2부터 시작하여 
+
+현재 최소값  + (방을 넘는 횟수 * 6)을 계산해주면된다.
+
+ 
+
+로직 - 
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int n = Integer.parseInt(st.nextToken());
+        int answer = 2;
+        int cnt = 1;
+
+        if( n ==1){
+            System.out.println(cnt);
+        }else {
+
+            while (answer <= n){
+                answer = answer+(cnt*6);
+                cnt++;
+            }
+
+            System.out.println(cnt);
+        }
+
+    }
+
+}
