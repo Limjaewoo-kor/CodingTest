@@ -1,0 +1,84 @@
+https://www.acmicpc.net/problem/9655﻿
+
+이번 문제는 9655번 돌 게임 문제로 다이나믹 프로그래밍[dp]을 활용하여 풀이가 가능합니다.
+
+
+입력 사항 -  
+
+첫째 줄에 N이 주어진다. (1 ≤ N ≤ 1000)
+
+
+
+출력 사항 -  
+
+상근이가 게임을 이기면 SK를, 창영이가 게임을 이기면 CY을 출력한다.
+
+
+
+주의 사항  - 
+
+문제의 맨 아랫줄에 포인트가 숨어있는데요. 밑줄친 2가지가 포인트입니다.
+
+두 사람이 완벽하게 게임을 했을 때, 이기는 사람을 구하는 프로그램을 작성하시오. 게임은 상근이가 먼저 시작한다. 
+
+
+
+
+
+풀이 방식 -
+
+dp의 경우 작은 것에서 큰 것 혹은 큰 것에서 작은 것으로 방향성을 잡고 풀이하게됩니다. 
+
+[ 해당 문제는 작은것부터 풀이합니다. ]
+
+게임은 상근이가 먼저 시작하기에 N이 1이면 상근이가 1개 가져가고 상근이의 승리로 끝이 납니다.
+
+2이면 상근이가 1개 가져가고 창영이가 1개 가져가서 상근이의 패배로 끝이납니다.
+
+3이면 상근이가 3개 가져가고 상근이의 승리로 끝이 납니다.
+
+4이면 상근이가 1개 또는 3개를 가져가고 창영이가 나머지 1개 또는 3개를 가져가서 상근이의 패배로 끝이납니다.
+
+5이면 상근이가 1개 또는 3개를 가져가고 창영이가 1개 또는 3개를 가져가면
+
+다시 상근이가 남은 1개 또는 3개를 가져가서 상근이의 승리로 끝이 납니다.
+
+위의 방식을 보면 홀수면 상근이의 승리, 짝수면 패배인것을 확인할 수 있으며,
+
+추가적으로 문제에서 "완벽하게 게임을 했을 때" 라고 하였으니, 게임의 최소값을 구해줘야합니다.
+
+
+
+
+
+로직 - 
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int n = Integer.parseInt(st.nextToken());
+        int[] arr= new int[1001];
+        arr[1]=1;
+        arr[2]=2;
+        arr[3]=3;
+
+        for (int i = 4; i <= n; i++) {
+            arr[i] = Math.min(arr[i-1],arr[i-3])+1;
+        }
+
+        if(arr[n]%2==0){
+            System.out.println("CY");
+        }else {
+            System.out.println("SK");
+        }
+    }
+
+}
