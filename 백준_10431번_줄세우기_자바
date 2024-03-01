@@ -1,0 +1,95 @@
+이번 문제는 10431번 줄세우기 문제로 문제를 읽고 그대로 구현해야하는 문제입니다.
+
+https://www.acmicpc.net/problem/10431
+
+
+
+입력 사항 -  
+
+첫 줄에 테스트 케이스의 수 P (1 ≤ P ≤ 1000) 가 주어진다.
+
+각 테스트 케이스는 테스트 케이스 번호 T와 20개의 양의 정수가 공백으로 구분되어 주어진다.
+
+20개의 정수는 줄서기를 할 아이들의 키를 줄서기 차례의 순서대로 밀리미터 단위로 나타낸 것이다.
+
+모든 테스트 케이스는 독립적이다.
+
+
+
+
+
+출력 사항 -  
+
+각각의 테스트 케이스에 대해 테스트 케이스의 번호와 학생들이 뒤로 물러난
+
+걸음 수의 총합을 공백으로 구분하여 출력한다.
+
+
+
+
+
+주의 사항  - 
+
+입력될때 20명의 키 값 외에 각 줄의 맨앞에 테스트 케이스의 번호도 같이 입력되는 점을 확인해야합니다.
+
+출력시에도 테스트 케이스의 번호를 총합과 같이 입력해주어야합니다. 
+
+
+
+
+
+풀이 방식 -
+
+20개의 값을 입력받아 배열에 넣고, 각각의 값들을 비교하며 이전에 들어온 값 중에 현재 들어온 값보다 더 큰 값이 있는지 체크하고 더 큰 값의 개수가 몇개인지 체크합니다, 그 값이 총합이 됩니다. 
+
+
+
+예시 )
+
+901 902 903 904 905 906 907 908 909 910 911 912 913 914 915 916 917 918 919 900
+
+위와 같은 값이 들어왔을때 마지막 900 이전에는 기존에 들어온 값중에 현재 들어오는 값보다 더 큰 값이 없으며,
+
+마지막 값인 900이 들어왔을시 앞에 자신보다 큰 값의 개수는 19개가 됩니다. 
+
+이런 식으로 이전에 들어온 값중에 현재 값보다 더 큰값이 몇개인지를 체크하여 각 케이스별로 다 더해주면 됩니다. 
+
+
+
+로직 - 
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int t = Integer.parseInt(st.nextToken());
+        int[] arr = new int[20];
+
+        for (int i = 0; i < t; i++) {
+            int cnt = 0;
+
+            st = new StringTokenizer(br.readLine());
+            int testNumber = Integer.parseInt(st.nextToken());
+            for (int j = 0; j < 20; j++) {
+                arr[j]= Integer.parseInt(st.nextToken());
+            }
+
+            for (int k = 0; k < 20; k++) {
+                for (int l = 0; l < k; l++) {
+                    if(arr[k] < arr[l]){
+                        cnt++;
+                    }
+                }
+            }
+            System.out.println(testNumber+" " +cnt);
+        }
+    }
+
+}
