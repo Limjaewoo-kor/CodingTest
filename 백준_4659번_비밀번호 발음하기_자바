@@ -1,0 +1,123 @@
+이번 문제는 4659번 비밀번호 발음하기 문제로 문제를 읽고 조건문 및 반복문을 이용하여 그대로 구현해야하는 문제입니다.
+
+https://www.acmicpc.net/problem/4659
+
+
+
+
+입력 사항 -  
+
+1. 입력은 여러개의 테스트 케이스로 이루어져 있다.
+
+2. 각 테스트 케이스는 한 줄로 이루어져 있으며, 각 줄에 테스트할 패스워드가 주어진다.
+
+3. 마지막 테스트 케이스는 end이며, 패스워드는 한글자 이상 20글자 이하의 문자열이다.
+
+     또한 패스워드는 대문자를 포함하지 않는다.
+
+
+
+
+
+출력 사항 -  
+
+각 테스트 케이스를 '예제 출력'의 형태에 기반하여 품질을 평가하여라.
+
+
+
+사용불가 - <현재 테스트중인 문자열> is not acceptable.
+
+사용가능 - <현재 테스트중인 문자열> is acceptable.
+
+
+
+
+
+주의 사항  - 
+
+입력값에 "end"가 입력되기 전까지 반복해야하며, 아래 조건 3가지를 모두 체크해주어야한다.
+
+모음(a,e,i,o,u) 하나를 반드시 포함하여야 한다.
+모음이 3개 혹은 자음이 3개 연속으로 오면 안 된다.
+같은 글자가 연속적으로 두번 오면 안되나, ee 와 oo는 허용한다.
+
+
+
+
+풀이 방식 -
+
+while(true)로 반복시켜주고, 입력단어에 "end"가 들어오면 종료해줍니다.
+
+그외의 경우엔 조건 3가지를 주의하며 모두 체크해주어야하는데, 3가지중에 한가지라도 만족하지 못하면 사용 불가한 경우이기때문에 불린값이나 int(1,0)값으로 flag변수를 잡아주면 좋습니다.
+
+ 또한 한가지 단어에대하여 실패나, 성공을 중복해서 출력하는 경우가 없도록 성공 또는 실패 출력시 다음 단어로 이동하는 것에 주의하여야합니다.
+
+
+
+
+
+로직 - 
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        String input = "";
+
+        while (true){
+            st = new StringTokenizer(br.readLine());
+            input = st.nextToken();
+            if(input.equals("end")) {
+                break;
+            }else {
+                boolean flag = true; // 성공 또는 실패를 출력할 flag
+                int aeChx = 0;  //1번 조건
+                int arrAeChx = 0; //2번 조건
+                int arrNotAeChx = 0; //2번 조건
+                char arrChx = 0; //3번 조건
+                for (char c: input.toCharArray()) {
+                    if(c=='a'||c=='e'||c=='i'||c=='o'||c=='u'){
+                        aeChx++;
+                        arrAeChx++;
+                        arrNotAeChx=0;
+                    }else {
+                        arrAeChx=0;
+                        arrNotAeChx++;
+                    }
+
+                    if(arrAeChx>2||arrNotAeChx>2&&flag){
+                        System.out.println("<"+input+"> is not acceptable.");
+                        flag=false;
+                        break;
+                    }
+
+                    if(c==arrChx&&flag){
+                        if (arrChx != 'e' && arrChx != 'o') {
+                            System.out.println("<"+input+"> is not acceptable.");
+                            flag=false;
+                            break;
+                        }
+                    }
+                    arrChx = c;
+                }
+
+                if(aeChx==0&&flag){
+                    System.out.println("<"+input+"> is not acceptable.");
+                    flag=false;
+                }
+
+                if(flag){
+                    System.out.println("<"+input+"> is acceptable.");
+                }
+            }
+        }
+
+    }
+
+}
