@@ -1,0 +1,82 @@
+이번 문제는 21921번 블로그 문제로 문제를 읽고 조건문 및 반복문을 이용하여 그대로 구현해야하는 문제입니다,
+슬라이딩윈도우를 사용할 수 있습니다.
+
+ 
+
+입력 사항 -  
+1. 첫째 줄에 블로그를 시작하고 지난 일수 N와 X가 공백으로 구분되어 주어진다.
+2. 둘째 줄에는 블로그 시작 1일차부터 N일차까지 하루 방문자 수가 공백으로 구분되어 주어진다.
+
+ 1 ≤ X ≤ N ≤ 250,000
+ 0 ≤ 방문자 수 ≤ 8,000
+ 
+
+출력 사항 -  
+첫째 줄에 X일 동안 가장 많이 들어온 방문자 수를 출력한다. 만약 최대 방문자 수가 0명이라면 SAD를 출력한다.
+만약 최대 방문자 수가 0명이 아닌 경우 둘째 줄에 기간이 몇 개 있는지 출력한다.
+
+
+주의 사항  - 
+방문자가 0인 경우에는 최대 기간의 갯수도 출력하지않습니다.
+
+ 
+
+풀이 방식 -
+구간을 산정하는 슬라이딩 윈도우 알고리즘을 이용하여 풀이가 가능하며, SAD나 최대 기간의 횟수 카운트에만 주의하면 
+어렵지 않은 풀이입니다.
+
+
+로직 - 
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+    static int n;
+    static int x;
+    static int[] arr;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        n = Integer.parseInt(st.nextToken());
+        x = Integer.parseInt(st.nextToken());
+
+        arr= new int[n+1];
+        
+        st = new StringTokenizer(br.readLine());
+
+        for (int i = 0; i < n; i++) {
+            arr[i]= Integer.parseInt(st.nextToken());
+        }
+
+        int tmpSum = 0;
+
+        for (int i = 0; i < x; i++) {
+            tmpSum += arr[i];
+        }
+
+        int totalSum = tmpSum;
+        int maxCnt = 1;
+
+        for (int i = x; i < n; i++) {
+            tmpSum += arr[i] - arr[i-x];
+            if (totalSum == tmpSum) maxCnt++;
+            else if (totalSum < tmpSum) {
+                totalSum = tmpSum;
+                maxCnt = 1;
+            }
+        }
+
+        if (totalSum == 0) {
+            System.out.println("SAD");
+        }else {
+            System.out.println(totalSum);
+            System.out.println(maxCnt);
+        }
+
+    }
+
+}
