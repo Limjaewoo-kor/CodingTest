@@ -1,0 +1,63 @@
+이번 문제는 2075번 N번째 큰 수 문제로 우선순위 큐를 사용하여 풀이가 가능한 문제입니다.
+
+https://www.acmicpc.net/problem/2075
+
+
+
+
+입력 사항 -  
+
+첫째 줄에 N(1 ≤ N ≤ 1,500)이 주어진다.
+다음 N개의 줄에는 각 줄마다 N개의 수가 주어진다.
+표에 적힌 수는 -10억보다 크거나 같고, 10억보다 작거나 같은 정수이다.
+
+
+출력 사항 -  
+
+첫째 줄에 N번째 큰 수를 출력한다.
+
+
+
+주의 사항  - 
+
+N*N의 표가 만들어지고 그 중에서 N번째 큰수를 출력하면 됩니다.
+
+
+
+풀이 방식 -
+
+우선순위 큐를 이용하여 내림차순 정렬한 후에 N번째 이전의 수를 모두 제거하고, N번째 수를 출력해주었습니다. 
+
+
+
+로직 - 
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int n = Integer.parseInt(st.nextToken());
+        PriorityQueue<Integer> pq =new PriorityQueue<>(Collections.reverseOrder());
+
+
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < n; j++) {
+                pq.offer(Integer.parseInt(st.nextToken()));
+            }
+        }
+
+        for (int i = 0; i < n-1; i++) {
+            pq.poll();
+        }
+        System.out.println(pq.poll());
+    }
+
+}
